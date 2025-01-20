@@ -1,72 +1,94 @@
-Secure File Sharing System
+# Secure File Sharing System
+
 A Flask-based secure file sharing system that enables secure file transfers between Operations Users and Client Users through encrypted URLs.
 
-Overview
+## Overview
+
 The system provides two types of users with different capabilities:
 
-Operations User
-Can log in to the system
-Upload files (restricted to .pptx, .docx, and .xlsx formats)
-Secure file management
-Client User
-Can sign up (receives encrypted URL)
-Email verification required
-Can log in to the system
-View list of all uploaded files
-Download files through secure encrypted URLs
-Features
-Secure Authentication: JWT-based authentication system
-Role-Based Access Control: Different permissions for Operations and Client users
-File Upload Restrictions: Strict file type validation (.pptx, .docx, .xlsx)
-Encrypted Download URLs: Secure, user-specific download links
-Email Verification: Automated email verification system
-Secure File Storage: Encrypted file storage system
-Access Control: URL access restricted to authorized client users
-Technical Stack
-Backend: Flask (Python)
-Database: SQLAlchemy
-Authentication: JWT Tokens
-File Storage: Encrypted local storage
-Email Service: Flask-Mail
-API Endpoints
-Operations User
-POST /api/ops/login
+### Operations User
+- Can log in to the system
+- Upload files (restricted to .pptx, .docx, and .xlsx formats)
+- Secure file management
+
+### Client User
+- Can sign up (receives encrypted URL)
+- Email verification required
+- Can log in to the system
+- View list of all uploaded files
+- Download files through secure encrypted URLs
+
+## Features
+
+- **Secure Authentication**: JWT-based authentication system
+- **Role-Based Access Control**: Different permissions for Operations and Client users
+- **File Upload Restrictions**: Strict file type validation (.pptx, .docx, .xlsx)
+- **Encrypted Download URLs**: Secure, user-specific download links
+- **Email Verification**: Automated email verification system
+- **Secure File Storage**: Encrypted file storage system
+- **Access Control**: URL access restricted to authorized client users
+
+## Technical Stack
+
+- **Backend**: Flask (Python)
+- **Database**: SQLAlchemy
+- **Authentication**: JWT Tokens
+- **File Storage**: Encrypted local storage
+- **Email Service**: Flask-Mail
+
+## API Endpoints
+
+### Operations User
+```
+POST /login
     - Login for operations users
 
-POST /api/ops/upload
+POST /upload-file
     - Upload files (pptx, docx, xlsx only)
-Client User
-POST /api/client/signup
+```
+
+### Client User
+```
+POST /signup
     - Register new client user
     - Returns encrypted URL
 
-POST /api/client/verify-email
+POST /verify-email/<token>
     - Email verification endpoint
 
-POST /api/client/login
+POST /login
     - Client user login
 
-GET /api/client/files
+GET /list-files
     - List all uploaded files
 
-GET /api/client/download/{assignment_id}
+GET /download-file/<token>
     - Get encrypted download URL
-Sample Response
+```
+
+## Sample Response
+
+```json
 {
     "download-link": "..../download-file/moiasnciaduasnduoadosnoadaosid",
     "message": "success"
 }
-Setup Instructions
-Clone the repository:
-git clone https://github.com/agrawalchaitany/flask-secure-file-sharing.git
-cd flask-secure-file-sharing
-Set up virtual environment:
-python -m venv venv
-source venv/bin/activate  # For Unix
-venv\Scripts\activate     # For Windows
-Install dependencies:
-pip install -r requirements.txt
-Set up environment variables (.env file):
+```
+
+## Setup Instructions
+
+1. Clone the repository:
+```bash
+git clone https://github.com/Kheraditya/ez.git
+```
+
+2. Install dependencies:
+```bash
+pip install 
+```
+
+4. Set up environment variables (.env file):
+```
 SECRET_KEY=your-very-secret-key
 SECURITY_PASSWORD_SALT=your_password_salt_here
 DATABASE_URL=mysql+pymysql://root:123456789@localhost:3306/secure_file_sharing
@@ -74,42 +96,53 @@ JWT_SECRET_KEY=your_secret_key
 MAIL_USERNAME=email_id@gmail.com
 MAIL_PASSWORD=your_passward
 UPLOAD_FOLDER=flask-secure-file-sharing\uploads
-Initialize database:
+```
+
+5. Initialize database:
+```bash
 flask db upgrade
-Run the application:
-python run.py
+```
+
+6. Run the application:
+```bash
+python app.py
+```
+
+
 The test suite covers:
+- User authentication
+- File upload/download
+- Email verification
+- URL encryption
+- Access control
 
-User authentication
-File upload/download
-Email verification
-URL encryption
-Access control
-Production Deployment
-Server Requirements:
+## Production Deployment
 
-Linux server (Ubuntu recommended)
-Python 3.8+
-Nginx
-Gunicorn
-SSL certificate
-Deployment Steps:
+1. Server Requirements:
+   - Linux server (Ubuntu recommended)
+   - Python 3.8+
+   - Nginx
+   - Gunicorn
+   - SSL certificate
 
-Set up server environment
-Configure Nginx and Gunicorn
-Set up SSL certificate
-Configure production database
-Set up environment variables
-Deploy using Git or Docker
-Security Considerations:
+2. Deployment Steps:
+   - Set up server environment
+   - Configure Nginx and Gunicorn
+   - Set up SSL certificate
+   - Configure production database
+   - Set up environment variables
+   - Deploy using Git or Docker
 
-Use production-grade database
-Enable HTTPS
-Set up firewall rules
-Configure proper file permissions
-Implement rate limiting
-Set up regular backups
-Directory Structure
+3. Security Considerations:
+   - Use production-grade database
+   - Enable HTTPS
+   - Set up firewall rules
+   - Configure proper file permissions
+   - Implement rate limiting
+   - Set up regular backups
+
+## Directory Structure
+```
 flask-secure-file-sharing/
 ├── app/
 |   ├── templates/
@@ -128,3 +161,4 @@ flask-secure-file-sharing/
 ├── run.py
 ├── requirements.txt
 └── README.md
+```
